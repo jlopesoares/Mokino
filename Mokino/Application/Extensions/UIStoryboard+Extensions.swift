@@ -22,6 +22,10 @@ extension UIStoryboard {
         UIStoryboard.main.instantiateViewController(withIdentifier: String(describing: FavoritesViewController.self)) as? FavoritesViewController
     }
     
+    var searchViewController: SearchViewController? {
+        UIStoryboard.main.instantiateViewController(withIdentifier: String(describing: SearchViewController.self)) as? SearchViewController
+    }
+    
     var detailsViewController: DetailsViewController? {
         UIStoryboard.main.instantiateViewController(withIdentifier: String(describing: DetailsViewController.self)) as? DetailsViewController
     }

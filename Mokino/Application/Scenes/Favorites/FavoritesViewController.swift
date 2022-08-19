@@ -8,7 +8,11 @@
 import UIKit
 
 class FavoritesViewController: UIViewController {
-
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        .lightContent
+    }
+    
     var viewModel: FavoritesViewModel!
     
     override func viewDidLoad() {
@@ -16,14 +20,15 @@ class FavoritesViewController: UIViewController {
         
         title = "Mokino Favorites"
         navigationController?.navigationBar.prefersLargeTitles = true
-
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-            self.openDetail()
-        }
+        setupUI()
     }
     
     func setupUI() {
+        
+        
+        view.backgroundColor = .customDarkerGrey
+        
         
     }
     
