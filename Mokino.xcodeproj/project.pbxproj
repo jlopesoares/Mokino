@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		716B762128AFF6460060BCB9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 716B762028AFF6460060BCB9 /* AppDelegate.swift */; };
 		716B762328AFF6460060BCB9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 716B762228AFF6460060BCB9 /* SceneDelegate.swift */; };
-		716B762528AFF6460060BCB9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 716B762428AFF6460060BCB9 /* ViewController.swift */; };
 		716B762828AFF6460060BCB9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 716B762628AFF6460060BCB9 /* Main.storyboard */; };
 		716B762A28AFF6470060BCB9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 716B762928AFF6470060BCB9 /* Assets.xcassets */; };
 		716B762D28AFF6470060BCB9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 716B762B28AFF6470060BCB9 /* LaunchScreen.storyboard */; };
@@ -39,7 +38,6 @@
 		716B761D28AFF6460060BCB9 /* Mokino.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mokino.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		716B762028AFF6460060BCB9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		716B762228AFF6460060BCB9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		716B762428AFF6460060BCB9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		716B762728AFF6460060BCB9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		716B762928AFF6470060BCB9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		716B762C28AFF6470060BCB9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -99,13 +97,11 @@
 		716B761F28AFF6460060BCB9 /* Mokino */ = {
 			isa = PBXGroup;
 			children = (
-				716B762028AFF6460060BCB9 /* AppDelegate.swift */,
-				716B762228AFF6460060BCB9 /* SceneDelegate.swift */,
-				716B762428AFF6460060BCB9 /* ViewController.swift */,
-				716B762628AFF6460060BCB9 /* Main.storyboard */,
-				716B762928AFF6470060BCB9 /* Assets.xcassets */,
-				716B762B28AFF6470060BCB9 /* LaunchScreen.storyboard */,
-				716B762E28AFF6470060BCB9 /* Info.plist */,
+				716B765028AFF90A0060BCB9 /* Application */,
+				716B765428AFF92C0060BCB9 /* Network */,
+				716B765328AFF9260060BCB9 /* Domain */,
+				716B765528AFFAB70060BCB9 /* Resources */,
+				716B765628AFFAC80060BCB9 /* SupportingFiles */,
 			);
 			path = Mokino;
 			sourceTree = "<group>";
@@ -125,6 +121,55 @@
 				716B764328AFF6470060BCB9 /* MokinoUITestsLaunchTests.swift */,
 			);
 			path = MokinoUITests;
+			sourceTree = "<group>";
+		};
+		716B765028AFF90A0060BCB9 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				716B765228AFF91D0060BCB9 /* Scenes */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		716B765228AFF91D0060BCB9 /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
+		716B765328AFF9260060BCB9 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		716B765428AFF92C0060BCB9 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		716B765528AFFAB70060BCB9 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				716B762628AFF6460060BCB9 /* Main.storyboard */,
+				716B762928AFF6470060BCB9 /* Assets.xcassets */,
+				716B762B28AFF6470060BCB9 /* LaunchScreen.storyboard */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		716B765628AFFAC80060BCB9 /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				716B762028AFF6460060BCB9 /* AppDelegate.swift */,
+				716B762228AFF6460060BCB9 /* SceneDelegate.swift */,
+				716B762E28AFF6470060BCB9 /* Info.plist */,
+			);
+			path = SupportingFiles;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -258,7 +303,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				716B762528AFF6460060BCB9 /* ViewController.swift in Sources */,
 				716B762128AFF6460060BCB9 /* AppDelegate.swift in Sources */,
 				716B762328AFF6460060BCB9 /* SceneDelegate.swift in Sources */,
 			);
@@ -438,7 +482,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Mokino/Info.plist;
+				INFOPLIST_FILE = Mokino/SupportingFiles/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -465,7 +509,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Mokino/Info.plist;
+				INFOPLIST_FILE = Mokino/SupportingFiles/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
