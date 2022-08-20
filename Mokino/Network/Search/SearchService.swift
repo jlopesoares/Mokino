@@ -9,18 +9,18 @@ import Foundation
 
 class SearchService: SearchProvider, NetworkUseCase {
     
-    private let jsonDecoder: JSONDecoder = {
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
-        dateFormatter.dateFormat = "yyyy-mm-dd"
-        
-        let jsonDecoder = JSONDecoder()
-        jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
-        jsonDecoder.dateDecodingStrategy = .formatted(dateFormatter)
-        
-        return jsonDecoder
-    }()
+//    private let jsonDecoder: JSONDecoder = {
+//
+//        let dateFormatter = DateFormatter()
+//        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+//        dateFormatter.dateFormat = "yyyy-mm-dd"
+//
+//        let jsonDecoder = JSONDecoder()
+//        jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
+//        jsonDecoder.dateDecodingStrategy = .formatted(dateFormatter)
+//
+//        return jsonDecoder
+//    }()
     
     func searchMovies(with searchTerm: String, completionHandler: @escaping SearchCompletionHandler) {
         
@@ -47,7 +47,7 @@ class SearchService: SearchProvider, NetworkUseCase {
             }
             
             do {
-                let movieResponse = try self.jsonDecoder.decode(SearchResult.self, from: data)
+                let movieResponse = try JSONDecoder().decode(SearchResult.self, from: data)
                 completionHandler(.success(movieResponse.results!))
                 
             } catch let error {

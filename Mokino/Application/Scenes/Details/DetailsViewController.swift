@@ -18,8 +18,23 @@ class DetailsViewController: UIViewController {
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var sinopseLabel: UILabel!
-    @IBOutlet weak var releaseDateHeaderLabel: UILabel!
+    
+    @IBOutlet weak var releaseDateStackView: UIStackView!
+    @IBOutlet weak var releaseDateHeaderLabel: UILabel! {
+        didSet {
+            releaseDateHeaderLabel.text = "Release Date:"
+        }
+    }
     @IBOutlet weak var releaseDateLabel: UILabel!
+    
+    
+    @IBOutlet weak var ratingStackView: UIStackView!
+    @IBOutlet weak var ratingHeaderLabel: UILabel! {
+        didSet {
+            ratingHeaderLabel.text = "Rating:"
+        }
+    }
+    @IBOutlet weak var ratingLabel: UILabel!
     
     var viewModel: DetailsViewModel!
     
@@ -38,5 +53,9 @@ class DetailsViewController: UIViewController {
         
         headerImageView.setImage(url: viewModel.headerImageURL)
         posterImageView.setImage(url: viewModel.posterImageURL)
+        
+        ratingLabel.text = viewModel.rating
+        releaseDateLabel.text = viewModel.releaseDate
+        
     }
 }

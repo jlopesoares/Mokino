@@ -9,4 +9,14 @@ import Foundation
 
 final class FavoritesViewModel {
     
+    var repository: FavoritesRepository
+    
+    init(favoriteRepository: FavoritesRepository) {
+        self.repository = favoriteRepository
+    }
+    
+    func getFavoriteMovies() -> [Movie] {
+        
+        return repository.getMovies()
+    }
 }

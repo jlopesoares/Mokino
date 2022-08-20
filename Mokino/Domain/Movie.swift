@@ -16,7 +16,9 @@ struct Movie: Codable, Hashable {
     let overview: String?
     let releaseDate: Date?
     let voteAverage: Double?
-   
+    
+    var isFavorite: Bool = false
+    
     public var posterURL: URL? {
         return URL(string: "https://image.tmdb.org/t/p/w500\(posterPath ?? "")")
     }
@@ -31,5 +33,28 @@ struct Movie: Codable, Hashable {
     
     public func hash(into hasher: inout Hasher) {
         hasher.combine(id)
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case id = "id"
+        case title = "title"
+        case backdropPath = "backdrop_path"
+        case posterPath = "poster_path"
+        case overview = "overview"
+        case releaseDate = "release_date"
+        case voteAverage = "vote_average"
+    }
+    
+    init(from decoder: Decoder) throws {
+        
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        
+        id = try values.decode(Int.self, forKey: .id)
+        title = try? values.decode(String.self, forKey: .title)
+        backdropPath = try? values.decode(String.self, forKey: .backdropPath)
+        posterPath = try? values.decode(String.self, forKey: .posterPath)
+        overview = try? values.decode(String.self, forKey: .overview)
+        releaseDate = try? values.decode(Date.self, forKey: .releaseDate)
+        voteAverage = try? values.decode(Double.self, forKey: .voteAverage)
     }
 }

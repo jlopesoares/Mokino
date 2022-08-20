@@ -14,10 +14,12 @@ enum SearchSections {
 final class SearchViewModel {
     
     let searchAPI: SearchAPI
+    let favoritesRepository: FavoritesRepository
     private(set) var datasource = [Movie]()
     
-    init(searchAPI: SearchAPI) {
+    init(searchAPI: SearchAPI, favoritesRepository: FavoritesRepository) {
         self.searchAPI = searchAPI
+        self.favoritesRepository = favoritesRepository
     }
 }
 
