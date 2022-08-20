@@ -7,52 +7,52 @@
 
 import Foundation
 
-class SearchService: SearchProvider {
+class SearchService: SearchProvider, NetworkUseCase {
     
     private let jsonDecoder: JSONDecoder = {
-        let jsonDecoder = JSONDecoder()
-        jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
+        
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "en_US_POSIX")
         dateFormatter.dateFormat = "yyyy-mm-dd"
+        
+        let jsonDecoder = JSONDecoder()
+        jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
         jsonDecoder.dateDecodingStrategy = .formatted(dateFormatter)
+        
         return jsonDecoder
     }()
     
     func searchMovies(with searchTerm: String, completionHandler: @escaping SearchCompletionHandler) {
         
-        //create url components
-        guard var urlComponents = URLComponents(string: "") else {
+        let queryItems = [
+            URLQueryItem(name: NetworkConstants.Parameters.adult.rawValue, value: "false"),
+            URLQueryItem(name: NetworkConstants.Parameters.query.rawValue, value: searchTerm)
+        ]
+        
+        guard let url = buildURLRequest(for: "search/movie", queryParameters: queryItems) else {
             return
         }
         
-        //perform network request
-        URLSession.shared.dataTask(with: urlComponents.url!) { [unowned self] (data, response, error) in
+        URLSession.shared.dataTask(with: url) { [unowned self] (data, response, error) in
             
-            if error != nil {
-                return
+            if let error = error {
+                completionHandler(.failure(error))
             }
             
-            guard let response = response as? HTTPURLResponse, 200..<300 ~= response.statusCode else {
+            guard
+                let response = response as? HTTPURLResponse, 200..<300 ~= response.statusCode,
+                let data = data
+            else {
                 return
             }
-            
-            guard let data = data else {
-                return
-            }
-            
-            print(data)
             
             do {
                 let movieResponse = try self.jsonDecoder.decode(SearchResult.self, from: data)
                 completionHandler(.success(movieResponse.results!))
                 
             } catch let error {
-                print(error)
-//                return failure(.serializationError)
+                completionHandler(.failure(error))
             }
         }.resume()
-    
-        
     }
 }

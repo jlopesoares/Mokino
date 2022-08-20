@@ -17,7 +17,6 @@ extension UIStoryboard {
         UIStoryboard.main.instantiateViewController(withIdentifier: String(describing: MainTabBarController.self)) as? MainTabBarController
     }
     
-    
     var favoritesViewController: FavoritesViewController? {
         UIStoryboard.main.instantiateViewController(withIdentifier: String(describing: FavoritesViewController.self)) as? FavoritesViewController
     }
