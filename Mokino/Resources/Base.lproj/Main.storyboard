@@ -184,47 +184,44 @@
             </objects>
             <point key="canvasLocation" x="2868" y="519"/>
         </scene>
-        <!--View Controller-->
+        <!--Collection Lost View Controller-->
         <scene sceneID="2MG-S7-1qK">
             <objects>
-                <viewController storyboardIdentifier="ConnectionLostViewController" id="tU9-HD-ggQ" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ConnectionLostViewController" id="tU9-HD-ggQ" customClass="CollectionLostViewController" customModule="Mokino" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="VdC-Nz-dle">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="rXo-Gc-JId">
-                                <rect key="frame" x="16" y="322.66666666666669" width="358" height="199.00000000000006"/>
-                                <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" image="wifi.slash" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="xqZ-QR-fsw">
-                                        <rect key="frame" x="104" y="0.3333333333333286" width="150" height="147.66666666666666"/>
-                                        <color key="tintColor" name="CustomGreen"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="150" id="1x7-av-uQZ"/>
-                                            <constraint firstAttribute="width" secondItem="xqZ-QR-fsw" secondAttribute="height" multiplier="1:1" id="AEd-S0-5EJ"/>
-                                            <constraint firstAttribute="height" constant="150" id="eos-VP-UOV"/>
-                                        </constraints>
-                                    </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Connection Lost" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EEN-PS-8GY">
-                                        <rect key="frame" x="116.66666666666666" y="174" width="124.66666666666666" height="25"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="25" id="NNX-yT-7Ks"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                            </stackView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" image="wifi.slash" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="xqZ-QR-fsw">
+                                <rect key="frame" x="120" y="307.33333333333331" width="150" height="147.66666666666669"/>
+                                <color key="tintColor" name="CustomGreen"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="150" id="1x7-av-uQZ"/>
+                                    <constraint firstAttribute="width" secondItem="xqZ-QR-fsw" secondAttribute="height" multiplier="1:1" id="AEd-S0-5EJ"/>
+                                    <constraint firstAttribute="height" constant="150" id="eos-VP-UOV"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Connection Lost" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EEN-PS-8GY">
+                                <rect key="frame" x="142.33333333333334" y="481" width="105.66666666666666" height="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="eXN-GG-ING"/>
                         <color key="backgroundColor" name="CustomPurple"/>
                         <constraints>
-                            <constraint firstItem="rXo-Gc-JId" firstAttribute="centerY" secondItem="VdC-Nz-dle" secondAttribute="centerY" id="QVV-9f-ehY"/>
-                            <constraint firstItem="rXo-Gc-JId" firstAttribute="leading" secondItem="eXN-GG-ING" secondAttribute="leading" constant="16" id="cYH-Pt-RRp"/>
-                            <constraint firstItem="rXo-Gc-JId" firstAttribute="centerX" secondItem="VdC-Nz-dle" secondAttribute="centerX" id="gCY-b5-0yX"/>
-                            <constraint firstItem="eXN-GG-ING" firstAttribute="trailing" secondItem="rXo-Gc-JId" secondAttribute="trailing" constant="16" id="xIX-jn-HE0"/>
+                            <constraint firstItem="EEN-PS-8GY" firstAttribute="centerX" secondItem="VdC-Nz-dle" secondAttribute="centerX" id="EG4-Fh-na9"/>
+                            <constraint firstItem="EEN-PS-8GY" firstAttribute="top" secondItem="xqZ-QR-fsw" secondAttribute="bottom" constant="24" id="MpA-ju-pXo"/>
+                            <constraint firstItem="eXN-GG-ING" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="EEN-PS-8GY" secondAttribute="trailing" constant="16" id="QLP-0c-Rjb"/>
+                            <constraint firstItem="xqZ-QR-fsw" firstAttribute="centerY" secondItem="VdC-Nz-dle" secondAttribute="centerY" constant="-40" id="X7x-yf-CKQ"/>
+                            <constraint firstItem="xqZ-QR-fsw" firstAttribute="centerX" secondItem="VdC-Nz-dle" secondAttribute="centerX" id="goY-w4-JEX"/>
+                            <constraint firstItem="EEN-PS-8GY" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="eXN-GG-ING" secondAttribute="leading" constant="16" id="oLO-5q-8Rj"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="errorLabel" destination="EEN-PS-8GY" id="XWY-Lu-epT"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WK8-Ny-uaf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

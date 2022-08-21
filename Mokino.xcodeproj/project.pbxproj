@@ -48,6 +48,7 @@
 		717F39E328B24B34004D019A /* HiddenMoviesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717F39E228B24B34004D019A /* HiddenMoviesViewModel.swift */; };
 		7186AC3F28B2EF7F00398C79 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7186AC3E28B2EF7F00398C79 /* Localizable.strings */; };
 		7186AC4128B2F02800398C79 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7186AC4028B2F02800398C79 /* String+Extensions.swift */; };
+		7186AC4428B2F65200398C79 /* CollectionLostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7186AC4328B2F65200398C79 /* CollectionLostViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -112,6 +113,7 @@
 		717F39E228B24B34004D019A /* HiddenMoviesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiddenMoviesViewModel.swift; sourceTree = "<group>"; };
 		7186AC3E28B2EF7F00398C79 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		7186AC4028B2F02800398C79 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
+		7186AC4328B2F65200398C79 /* CollectionLostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionLostViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -259,11 +261,12 @@
 		716B765228AFF91D0060BCB9 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
-				717F39DF28B24B07004D019A /* Hidden */,
+				7186AC4228B2F62900398C79 /* ConnectionLost */,
+				716B765728AFFD420060BCB9 /* MainTabBar */,
 				716B765828AFFE030060BCB9 /* Favorites */,
 				716B765928AFFE0D0060BCB9 /* Search */,
+				717F39DF28B24B07004D019A /* Hidden */,
 				716B766828B006350060BCB9 /* Details */,
-				716B765728AFFD420060BCB9 /* MainTabBar */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -364,6 +367,14 @@
 				717F39E228B24B34004D019A /* HiddenMoviesViewModel.swift */,
 			);
 			path = Hidden;
+			sourceTree = "<group>";
+		};
+		7186AC4228B2F62900398C79 /* ConnectionLost */ = {
+			isa = PBXGroup;
+			children = (
+				7186AC4328B2F65200398C79 /* CollectionLostViewController.swift */,
+			);
+			path = ConnectionLost;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -517,6 +528,7 @@
 				71691A4628B13FBE00092F3C /* FavoritesRepository.swift in Sources */,
 				712A387D28B0DAFB004AA488 /* MovieCollectionViewCell.swift in Sources */,
 				71691A3D28B12E8000092F3C /* MoviesListUIBuilder.swift in Sources */,
+				7186AC4428B2F65200398C79 /* CollectionLostViewController.swift in Sources */,
 				712A387028B0D302004AA488 /* SearchAPI.swift in Sources */,
 				71691A4E28B1946C00092F3C /* HiddenMoviesRepository.swift in Sources */,
 				712A388528B1062D004AA488 /* UIView+Extensions.swift in Sources */,

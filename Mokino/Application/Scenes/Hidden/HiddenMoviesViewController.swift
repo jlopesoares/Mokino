@@ -12,12 +12,10 @@ class HiddenMoviesViewController: UIViewController, MoviesListUseCase, DetailsNa
     //MARK: - MoviesListUseCase Dependencies
     var movieslistUIBuilder = MoviesListUIBuilder()
     var collectionDataSource: UICollectionViewDiffableDataSource<SearchSections, Movie>!
+   
     @IBOutlet weak var collectionView: UICollectionView! {
         didSet {
-            movieslistUIBuilder.cellsRegistration(on: collectionView)
-            collectionView.setCollectionViewLayout(movieslistUIBuilder.createCompositionalLayout(), animated: false)
-            collectionView.delegate = self
-            collectionView.keyboardDismissMode = .onDrag
+            setupCollectionViewConfigs(delegate: self)
         }
     }
     
@@ -28,34 +26,13 @@ class HiddenMoviesViewController: UIViewController, MoviesListUseCase, DetailsNa
 
         title = "Screen.HiddenMovies.Title".localized
         
-        view.backgroundColor = .customDarkerGrey
-        setupCollectionProvider()
+        setupMoviesCellsProvider(delegate: self)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        updateCollectionView()
-    }
-    
-    func updateCollectionView() {
-        
-        var snapshot = NSDiffableDataSourceSnapshot<SearchSections, Movie>()
-        snapshot.appendSections([.movies])
-        snapshot.appendItems(viewModel.getMovies(), toSection: .movies)
-        collectionDataSource.apply(snapshot, animatingDifferences: true, completion: nil)
-    }
-    
-    func setupCollectionProvider() {
-        
-        collectionDataSource = UICollectionViewDiffableDataSource(collectionView: collectionView, cellProvider: { collectionView, indexPath, movie in
-            
-            let movieCell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: MovieCollectionViewCell.self), for: indexPath) as! MovieCollectionViewCell
-            movieCell.setup(movie: movie)
-            movieCell.delegate = self
-            
-            return movieCell
-        })
+        setupCollectionSnapshot(with: viewModel.getMovies())
     }
 }
 
@@ -72,7 +49,7 @@ extension HiddenMoviesViewController: MovieCellDelegate {
 
     func updateHiddenState(for movie: Movie) {
         viewModel.removeHidden(movie)
-        updateCollectionView()
+        setupCollectionSnapshot(with: viewModel.getMovies())
     }
 }
 

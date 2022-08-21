@@ -17,3 +17,5 @@
 "Screen.Search.Title" = "Search";
 
 "Search.Placeholder" = "Movie Name";
+
+"Connection.Lost" = "Connection Lost. Please, check your Wi-Fi or Mobile Data Settings";

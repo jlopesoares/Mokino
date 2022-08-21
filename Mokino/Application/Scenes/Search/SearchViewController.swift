@@ -21,10 +21,7 @@ class SearchViewController: UIViewController, DetailsNavigationUseCase, MoviesLi
     
     @IBOutlet weak var collectionView: UICollectionView! {
         didSet {
-            movieslistUIBuilder.cellsRegistration(on: collectionView)
-            collectionView.setCollectionViewLayout(movieslistUIBuilder.createCompositionalLayout(), animated: false)
-            collectionView.delegate = self
-            collectionView.keyboardDismissMode = .onDrag
+            setupCollectionViewConfigs(delegate: self)
         }
     }
     
@@ -39,39 +36,15 @@ class SearchViewController: UIViewController, DetailsNavigationUseCase, MoviesLi
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "Search"
+        title = "Screen.Search.Title".localized
         
-        setupCollectionProvider()
+        setupMoviesCellsProvider(delegate: self)
         searchTextfield.becomeFirstResponder()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        setupInitialCollectionSnapshot()
-    }
-    
-    func setupCollectionProvider() {
-        
-        collectionDataSource = UICollectionViewDiffableDataSource(collectionView: collectionView, cellProvider: { collectionView, indexPath, movie in
-            
-            let movieCell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: MovieCollectionViewCell.self), for: indexPath) as! MovieCollectionViewCell
-          
-            movieCell.setup(movie: movie)
-            movieCell.delegate = self
-            
-            return movieCell
-        })
-    }
-    
-    func setupInitialCollectionSnapshot() {
-        
-        DispatchQueue.main.async {
-            
-            var snapshot = NSDiffableDataSourceSnapshot<SearchSections, Movie>()
-            snapshot.appendSections([.movies])
-            snapshot.appendItems(self.viewModel.filteredDatasource, toSection: .movies)
-            self.collectionDataSource.apply(snapshot, animatingDifferences: true, completion: nil)
-        }
+        setupCollectionSnapshot(with: viewModel.filteredDatasource)
     }
     
     func updateCollectionView() {
@@ -93,7 +66,10 @@ extension SearchViewController {
         guard let searchTerm = searchTextfield.text else { return }
         
         viewModel.getMovies(for: searchTerm) { [weak self] result in
-            self?.setupInitialCollectionSnapshot()
+
+            guard let self = self else { return }
+            
+            self.setupCollectionSnapshot(with: self.viewModel.filteredDatasource)
         }
     }
 }
@@ -128,6 +104,6 @@ extension SearchViewController: MovieCellDelegate {
     func updateHiddenState(for movie: Movie) {
         
         viewModel.updateHideState(for: movie)
-        setupInitialCollectionSnapshot()
+        setupCollectionSnapshot(with: viewModel.filteredDatasource)
     }
 }
