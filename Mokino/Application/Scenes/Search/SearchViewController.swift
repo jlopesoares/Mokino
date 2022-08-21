@@ -8,116 +8,126 @@
 import UIKit
 import Combine
 
-class SearchViewController: UIViewController {
+class SearchViewController: UIViewController, DetailsNavigationUseCase, MoviesListUseCase {
     
+    //MARK: - Outlets
     @IBOutlet weak var searchTextfield: UITextField! {
         didSet {
             searchTextfield.delegate = self
             searchTextfield.placeholder = "Search Name"
+            searchTextfield.returnKeyType = .search
         }
     }
     
     @IBOutlet weak var collectionView: UICollectionView! {
         didSet {
-            collectionView.register(UINib(nibName: "MovieCollectionViewCell", bundle: .main), forCellWithReuseIdentifier: "MovieCollectionViewCell")
+            movieslistUIBuilder.cellsRegistration(on: collectionView)
+            collectionView.setCollectionViewLayout(movieslistUIBuilder.createCompositionalLayout(), animated: false)
             collectionView.delegate = self
-            collectionView.setCollectionViewLayout(createCompositionalLayout(), animated: false)
+            collectionView.keyboardDismissMode = .onDrag
         }
     }
     
-    let viewModel: SearchViewModel = SearchViewModel(searchAPI: SearchAPI(provider: SearchService()))
+    //MARK: - Movies List Dependencies
     var collectionDataSource: UICollectionViewDiffableDataSource<SearchSections, Movie>!
+    var movieslistUIBuilder = MoviesListUIBuilder()
     
+    let viewModel: SearchViewModel = SearchViewModel(searchAPI: SearchAPI(provider: SearchService(),
+                                                                          favoritesRepository: FavoritesRepository(),
+                                                                          hiddenMoviesRepository: HiddenMoviesRepository()))
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        title = "Search"
-        view.backgroundColor = .customDarkerGrey
         
+        title = "Search"
         
         setupCollectionProvider()
+        searchTextfield.becomeFirstResponder()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        setupInitialCollectionSnapshot()
+    }
+    
+    func setupCollectionProvider() {
+        
+        collectionDataSource = UICollectionViewDiffableDataSource(collectionView: collectionView, cellProvider: { collectionView, indexPath, movie in
+            
+            let movieCell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: MovieCollectionViewCell.self), for: indexPath) as! MovieCollectionViewCell
+          
+            movieCell.setup(movie: movie)
+            movieCell.delegate = self
+            
+            return movieCell
+        })
+    }
+    
+    func setupInitialCollectionSnapshot() {
+        
+        DispatchQueue.main.async {
+            
+            var snapshot = NSDiffableDataSourceSnapshot<SearchSections, Movie>()
+            snapshot.appendSections([.movies])
+            snapshot.appendItems(self.viewModel.filteredDatasource, toSection: .movies)
+            self.collectionDataSource.apply(snapshot, animatingDifferences: true, completion: nil)
+        }
     }
     
     func updateCollectionView() {
         
-        var snapshot = NSDiffableDataSourceSnapshot<SearchSections, Movie>()
-        snapshot.appendSections([.movies])
+        DispatchQueue.main.async {
+            
+            var snapshot = self.collectionDataSource.snapshot()
+            snapshot.reloadItems(self.viewModel.filteredDatasource)
+            self.collectionDataSource.apply(snapshot, animatingDifferences: true, completion: nil)
+        }
+    }
+}
 
-        snapshot.appendItems(viewModel.datasource, toSection: .movies)
+//MARK: - Service
+extension SearchViewController {
+    
+    func searchMoviesForCurrentTerm() {
         
-        collectionDataSource.apply(snapshot, animatingDifferences: true, completion: nil)
+        guard let searchTerm = searchTextfield.text else { return }
+        
+        viewModel.getMovies(for: searchTerm) { [weak self] result in
+            self?.setupInitialCollectionSnapshot()
+        }
     }
 }
 
 extension SearchViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-     
-        let detailViewModel = DetailsViewModel(movie: viewModel.datasource[indexPath.row])
-        let detailViewController = UIStoryboard.main.detailsViewController!
         
-        detailViewController.viewModel = detailViewModel
-        
-        navigationController?.pushViewController(detailViewController, animated: true)
-        
+        navigateToDetails(with: viewModel.filteredDatasource[indexPath.row])
     }
 }
 
-//MARK: - Text
+//MARK: - TextField
 extension SearchViewController: UITextFieldDelegate {
-    
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        
-        viewModel.getMovies(for: textField.text!) { result in
-            self.updateCollectionView()
-        }
-        
+       
+        textField.resignFirstResponder()
+        searchMoviesForCurrentTerm()
         return true
     }
-    
 }
 
-//MARK: - CollectionView
-extension SearchViewController {
+extension SearchViewController: MovieCellDelegate {
     
-    func setupCollectionProvider() {
+    func updateFavoriteState(for movie: Movie) {
         
-        collectionDataSource = UICollectionViewDiffableDataSource(collectionView: collectionView, cellProvider: { collectionView, indexPath, movie in
-            
-            let movieCell = collectionView.dequeueReusableCell(withReuseIdentifier: "MovieCollectionViewCell", for: indexPath) as! MovieCollectionViewCell
-            
-            movieCell.setup(movie: movie)
-            return movieCell
-        })
+        viewModel.updateFavoriteState(for: movie)
+        updateCollectionView()
     }
     
-    func createCompositionalLayout() -> UICollectionViewCompositionalLayout {
+    func updateHiddenState(for movie: Movie) {
         
-        return UICollectionViewCompositionalLayout { (sectionNumber, env) -> NSCollectionLayoutSection? in
-            
-            let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                                  heightDimension: .absolute(150))
-            
-            
-            let item = NSCollectionLayoutItem(layoutSize: itemSize)
-            item.contentInsets = NSDirectionalEdgeInsets(top: 8,
-                                                         leading: 0,
-                                                         bottom: 8,
-                                                         trailing: 8)
-            
-            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
-                                                   heightDimension: .absolute(150))
-            
-            let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize,
-                                                         subitems: [item])
-
-            let section = NSCollectionLayoutSection(group: group)
-            section.contentInsetsReference = .layoutMargins
-            section.interGroupSpacing = .zero
-          
-            return section
-        }
+        viewModel.updateHideState(for: movie)
+        setupInitialCollectionSnapshot()
     }
 }

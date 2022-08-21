@@ -12,22 +12,21 @@ protocol NetworkUseCase {
     func buildURLRequest(for serviceEndpoint: String, queryParameters: [URLQueryItem]) -> URL?
 }
 
-
 extension NetworkUseCase {
     
     func buildURLRequest(for serviceEndpoint: String, queryParameters: [URLQueryItem]) -> URL? {
         
-        //create url components
+        //Create url components
         guard var urlComponents = URLComponents(string: "\(NetworkConstants.baseURL)\(serviceEndpoint)") else {
             return nil
         }
         
-        //create query items
+        //Create query items
         let apiKeyParameter = URLQueryItem(name: NetworkConstants.Parameters.apiKey.rawValue, value: NetworkConstants.apiKey)
         let queryItems = queryParameters + [apiKeyParameter]
         urlComponents.queryItems = queryItems
         
-        //generate valid url
+        //Generate valid url
         guard let url = urlComponents.url else {
             return nil
         }

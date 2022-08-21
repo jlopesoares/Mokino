@@ -13,7 +13,7 @@ enum SearchSections {
 
 final class SearchViewModel {
     
-    let searchAPI: SearchAPI
+    private let searchAPI: SearchAPI
     private(set) var datasource = [Movie]()
     
     init(searchAPI: SearchAPI) {
@@ -24,19 +24,36 @@ final class SearchViewModel {
 //MARK: - Service
 extension SearchViewModel {
 
+    var filteredDatasource: [Movie] {
+        return searchAPI.filterMovies(for: datasource)
+    }
+    
     func getMovies(for searchTerm: String, completionHandler: @escaping SearchCompletionHandler) {
         
-        searchAPI.searchMovies(with: searchTerm) { result in
-            
+        searchAPI.searchMovies(with: searchTerm) { [weak self] result in
             switch result {
-            case .success(let movie):
-                self.datasource = movie
-                
+            case .success(let movies):
+                self?.datasource = movies
+                completionHandler(.success(movies))
             case .failure(let error):
-                break
+                completionHandler(.failure(error))
             }
-            
-            completionHandler(result)
         }
+    }
+}
+
+//MARK: - Favorites
+extension SearchViewModel {
+    
+    func updateFavoriteState(for movie: Movie) {
+        searchAPI.favoritesRepository.updateState(for: movie)
+    }
+}
+
+//MARK: - Hide
+extension SearchViewModel {
+    
+    func updateHideState(for movie: Movie) {
+        searchAPI.hiddenMoviesRepository.updateState(for: movie)
     }
 }

@@ -13,15 +13,41 @@ class MainTabBarController: UITabBarController {
         .lightContent
     }
     
+    var reachability: Reachability!
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        setNeedsStatusBarAppearanceUpdate()
-
+      
+        setupNetworkConnectionObserver()
         setupViewControllers()
         setupUI()
-        
     }
+}
+
+//MARK: - Reachability
+extension MainTabBarController {
+    
+    func setupNetworkConnectionObserver() {
+      
+        do {
+            reachability = try? Reachability()
+            try reachability.startNotifier()
+        } catch {
+            print("Failed to start network observer")
+        }
+        
+        reachability.whenReachable = { [weak self] _ in
+            self?.dismiss(animated: true)
+        }
+        
+        reachability.whenUnreachable = { [weak self] _ in
+            self?.presentConnectionLostViewController()
+        }
+    }
+}
+
+//MARK: - UI
+extension MainTabBarController {
     
     func setupUI() {
         
@@ -35,19 +61,33 @@ class MainTabBarController: UITabBarController {
     
     func setupViewControllers() {
         
-        let favoritesNavigationController = UINavigationController(rootViewController: UIStoryboard.main.favoritesViewController!)
-        favoritesNavigationController.tabBarItem.title = "Favorites"
-        favoritesNavigationController.tabBarItem.image = UIImage(named: "favorite")
-        favoritesNavigationController.navigationItem.largeTitleDisplayMode = .always
-        favoritesNavigationController.navigationBar.prefersLargeTitles = true
-        favoritesNavigationController.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-        favoritesNavigationController.navigationBar.barStyle = .black
+        if let favoritesVC = UIStoryboard.main.favoritesViewController {
+            
+            let favoritesNavigationController = UINavigationController(rootViewController: favoritesVC)
+            configureNavigationController(favoritesNavigationController,
+                                          title: "Favorites",
+                                          image: UIImage(systemName: "bookmark") ?? .add)
+            
+            self.viewControllers = [favoritesNavigationController]
+        }
         
-        let searchNavigationController = UINavigationController(rootViewController: UIStoryboard.main.searchViewController!)
-        searchNavigationController.tabBarItem.title = "Search"
-        searchNavigationController.tabBarItem.image = .checkmark
-        searchNavigationController.navigationBar.barStyle = .black
+        if let searchVC = UIStoryboard.main.searchViewController {
+            
+            let searchNavigationController = UINavigationController(rootViewController: searchVC)
+            configureNavigationController(searchNavigationController,
+                                          title: "Search",
+                                          image: UIImage(systemName: "magnifyingglass") ?? .actions)
+            
+            self.viewControllers?.append(searchNavigationController)
+        }
+    }
+    
+    func configureNavigationController(_ navigationController: UINavigationController, title: String, image: UIImage) {
         
-        self.viewControllers = [favoritesNavigationController, searchNavigationController]
+        navigationController.tabBarItem.image = image
+        navigationController.tabBarItem.title = title
+        navigationController.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        navigationController.navigationBar.barStyle = .black
+        navigationController.navigationBar.tintColor = .customBeige
     }
 }

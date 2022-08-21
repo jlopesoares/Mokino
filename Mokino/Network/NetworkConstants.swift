@@ -9,7 +9,7 @@ import Foundation
 
 struct NetworkConstants {
     static let baseURL = "https://api.themoviedb.org/3/"
-    static let apiKey = ""
+    static let apiKey = "ae5b867ee790efe19598ff6108ad4e02"
     
     enum Parameters: String {
         case apiKey = "api_key",

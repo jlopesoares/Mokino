@@ -15,12 +15,25 @@ final class DetailsViewModel {
         self.movie = movie
     }
     
-    var title: String {
-        movie.title ?? ""
+    var title: String? {
+        movie.title
     }
     
     var sinopse: String {
         movie.overview ?? ""
+    }
+    
+    var releaseDate: String {
+        movie.releaseDate ?? "unknown"
+    }
+    
+    var rating: String? {
+        
+        guard let rating = movie.voteAverage else {
+            return nil
+        }
+
+        return "\(rating)"
     }
     
     var posterImageURL: URL? {
@@ -30,5 +43,4 @@ final class DetailsViewModel {
     var headerImageURL: URL? {
         movie.backdropURL
     }
-    
 }

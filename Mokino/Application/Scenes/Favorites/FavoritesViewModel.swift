@@ -9,4 +9,18 @@ import Foundation
 
 final class FavoritesViewModel {
     
+    private var repository: FavoritesRepository
+    
+    init(favoriteRepository: FavoritesRepository) {
+        self.repository = favoriteRepository
+    }
+    
+    func getFavoriteMovies() -> [Movie] {
+        
+        return repository.getMovies()
+    }
+    
+    func removeFavorite(_ movie: Movie) {
+        repository.updateState(for: movie)
+    }
 }

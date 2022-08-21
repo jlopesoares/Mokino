@@ -29,4 +29,11 @@ extension UIStoryboard {
         UIStoryboard.main.instantiateViewController(withIdentifier: String(describing: DetailsViewController.self)) as? DetailsViewController
     }
     
+    var connectionLostViewController: UIViewController? {
+        UIStoryboard.main.instantiateViewController(withIdentifier: "ConnectionLostViewController")
+    }
+    
+    var hiddenMoviesViewController: HiddenMoviesViewController? {
+        UIStoryboard.main.instantiateViewController(withIdentifier: String(describing: HiddenMoviesViewController.self)) as? HiddenMoviesViewController
+    }
 }

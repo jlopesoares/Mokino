@@ -7,36 +7,88 @@
 
 import UIKit
 
-class FavoritesViewController: UIViewController {
+class FavoritesViewController: UIViewController, MoviesListUseCase, DetailsNavigationUseCase {
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         .lightContent
     }
     
-    var viewModel: FavoritesViewModel!
+    //MARK: - MoviesListUseCase Dependencies
+    var movieslistUIBuilder = MoviesListUIBuilder()
+    var collectionDataSource: UICollectionViewDiffableDataSource<SearchSections, Movie>!
+    @IBOutlet weak var collectionView: UICollectionView! {
+        didSet {
+            movieslistUIBuilder.cellsRegistration(on: collectionView)
+            collectionView.setCollectionViewLayout(movieslistUIBuilder.createCompositionalLayout(), animated: false)
+            collectionView.delegate = self
+            collectionView.keyboardDismissMode = .onDrag
+        }
+    }
+    
+    var viewModel = FavoritesViewModel(favoriteRepository: FavoritesRepository())
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "Mokino Favorites"
-        navigationController?.navigationBar.prefersLargeTitles = true
+        title = "Favorites"
         
-        setupUI()
+        setHiddenMoviesButton()
+        setupCollectionProvider()
     }
     
-    func setupUI() {
-        
-        
-        view.backgroundColor = .customDarkerGrey
-        
-        
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        updateCollectionView()
     }
     
+    func setHiddenMoviesButton() {
+        
+        let hiddenMoviesButton = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(openHiddenMovies))
+        hiddenMoviesButton.tintColor = .customBeige
+        navigationItem.rightBarButtonItem = hiddenMoviesButton
+    }
     
-    func openDetail() {
+    func updateCollectionView() {
         
-        let detailVC = UIStoryboard.main.detailsViewController!
-        navigationController?.pushViewController(detailVC, animated: true)
+        var snapshot = NSDiffableDataSourceSnapshot<SearchSections, Movie>()
+        snapshot.appendSections([.movies])
+        snapshot.appendItems(viewModel.getFavoriteMovies(), toSection: .movies)
+        collectionDataSource.apply(snapshot, animatingDifferences: true, completion: nil)
+    }
+    
+    func setupCollectionProvider() {
         
+        collectionDataSource = UICollectionViewDiffableDataSource(collectionView: collectionView, cellProvider: { collectionView, indexPath, movie in
+            
+            let movieCell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: MovieCollectionViewCell.self), for: indexPath) as! MovieCollectionViewCell
+            
+            movieCell.setup(movie: movie)
+            movieCell.delegate = self
+            
+            return movieCell
+        })
+    }
+    
+    @objc func openHiddenMovies() {
+        
+        let hiddenMoviesViewController = UIStoryboard.main.hiddenMoviesViewController
+        navigationController?.pushViewController(hiddenMoviesViewController!, animated: true)
+    }
+}
+
+extension FavoritesViewController: MovieCellDelegate {
+   
+    func updateFavoriteState(for movie: Movie) {
+        viewModel.removeFavorite(movie)
+        updateCollectionView()
+    }
+    
+    func updateHiddenState(for movie: Movie) {}
+}
+
+extension FavoritesViewController: UICollectionViewDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        navigateToDetails(with: viewModel.getFavoriteMovies()[indexPath.row])
     }
 }
