@@ -9,14 +9,13 @@ import Foundation
 
 final class HiddenMoviesViewModel {
     
-    var repository: HiddenMoviesRepository
+    private let repository: HiddenMoviesRepository
     
     init(repository: HiddenMoviesRepository) {
         self.repository = repository
     }
     
     func getMovies() -> [Movie] {
-        
         return repository.getMovies()
     }
 }
@@ -24,7 +23,7 @@ final class HiddenMoviesViewModel {
 //MARK: - Hide
 extension HiddenMoviesViewModel {
     
-    func updateHideState(for movie: Movie) {
+    func removeHidden(_ movie: Movie) {
         repository.updateState(for: movie)
     }
 }

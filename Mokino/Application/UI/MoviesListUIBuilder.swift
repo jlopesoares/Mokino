@@ -10,10 +10,7 @@ import UIKit
 struct MoviesListUIBuilder {
     
     func cellsRegistration(on collectionView: UICollectionView) {
-        collectionView.register(UINib(nibName: String(describing: MovieCollectionViewCell.self), bundle: .main), forCellWithReuseIdentifier: String(describing: MovieCollectionViewCell.self))
-        
-        collectionView.register(UINib(nibName: String(describing: FavoriteCollectionViewCell.self), bundle: .main), forCellWithReuseIdentifier: String(describing: FavoriteCollectionViewCell.self))
-        
+        collectionView.register(UINib(nibName: String(describing: MovieCollectionViewCell.self), bundle: .main), forCellWithReuseIdentifier: String(describing: MovieCollectionViewCell.self))        
     }
     
     func createCompositionalLayout() -> UICollectionViewCompositionalLayout {
@@ -21,7 +18,7 @@ struct MoviesListUIBuilder {
         return UICollectionViewCompositionalLayout { (sectionNumber, env) -> NSCollectionLayoutSection? in
             
             let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                                  heightDimension: .absolute(150))
+                                                  heightDimension: .fractionalHeight(1.0))
             
             
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
@@ -31,7 +28,7 @@ struct MoviesListUIBuilder {
                                                          trailing: 8)
             
             let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
-                                                   heightDimension: .absolute(150))
+                                                   heightDimension: .absolute(200))
             
             let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize,
                                                          subitems: [item])

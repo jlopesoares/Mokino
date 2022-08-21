@@ -21,6 +21,7 @@ class FavoritesViewController: UIViewController, MoviesListUseCase, DetailsNavig
             movieslistUIBuilder.cellsRegistration(on: collectionView)
             collectionView.setCollectionViewLayout(movieslistUIBuilder.createCompositionalLayout(), animated: false)
             collectionView.delegate = self
+            collectionView.keyboardDismissMode = .onDrag
         }
     }
     
@@ -37,7 +38,6 @@ class FavoritesViewController: UIViewController, MoviesListUseCase, DetailsNavig
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
         updateCollectionView()
     }
     
@@ -60,9 +60,10 @@ class FavoritesViewController: UIViewController, MoviesListUseCase, DetailsNavig
         
         collectionDataSource = UICollectionViewDiffableDataSource(collectionView: collectionView, cellProvider: { collectionView, indexPath, movie in
             
-            let movieCell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: FavoriteCollectionViewCell.self), for: indexPath) as! FavoriteCollectionViewCell
+            let movieCell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: MovieCollectionViewCell.self), for: indexPath) as! MovieCollectionViewCell
             
-            movieCell.setup(movie)
+            movieCell.setup(movie: movie)
+            movieCell.delegate = self
             
             return movieCell
         })
@@ -72,19 +73,17 @@ class FavoritesViewController: UIViewController, MoviesListUseCase, DetailsNavig
         
         let hiddenMoviesViewController = UIStoryboard.main.hiddenMoviesViewController
         navigationController?.pushViewController(hiddenMoviesViewController!, animated: true)
-        
     }
 }
 
 extension FavoritesViewController: MovieCellDelegate {
    
     func updateFavoriteState(for movie: Movie) {
-        
+        viewModel.removeFavorite(movie)
+        updateCollectionView()
     }
     
-    func updateHiddenState(for movie: Movie) {
-        
-    }
+    func updateHiddenState(for movie: Movie) {}
 }
 
 extension FavoritesViewController: UICollectionViewDelegate {

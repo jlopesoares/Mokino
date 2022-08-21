@@ -15,6 +15,7 @@ class SearchViewController: UIViewController, DetailsNavigationUseCase, MoviesLi
         didSet {
             searchTextfield.delegate = self
             searchTextfield.placeholder = "Search Name"
+            searchTextfield.returnKeyType = .search
         }
     }
     
@@ -23,6 +24,7 @@ class SearchViewController: UIViewController, DetailsNavigationUseCase, MoviesLi
             movieslistUIBuilder.cellsRegistration(on: collectionView)
             collectionView.setCollectionViewLayout(movieslistUIBuilder.createCompositionalLayout(), animated: false)
             collectionView.delegate = self
+            collectionView.keyboardDismissMode = .onDrag
         }
     }
     
@@ -43,13 +45,6 @@ class SearchViewController: UIViewController, DetailsNavigationUseCase, MoviesLi
         searchTextfield.becomeFirstResponder()
     }
     
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        viewModel.refreshDatasource()
-    }
-    
-
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         setupInitialCollectionSnapshot()
@@ -60,6 +55,7 @@ class SearchViewController: UIViewController, DetailsNavigationUseCase, MoviesLi
         collectionDataSource = UICollectionViewDiffableDataSource(collectionView: collectionView, cellProvider: { collectionView, indexPath, movie in
             
             let movieCell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: MovieCollectionViewCell.self), for: indexPath) as! MovieCollectionViewCell
+          
             movieCell.setup(movie: movie)
             movieCell.delegate = self
             
@@ -73,7 +69,7 @@ class SearchViewController: UIViewController, DetailsNavigationUseCase, MoviesLi
             
             var snapshot = NSDiffableDataSourceSnapshot<SearchSections, Movie>()
             snapshot.appendSections([.movies])
-            snapshot.appendItems(self.viewModel.datasource, toSection: .movies)
+            snapshot.appendItems(self.viewModel.filteredDatasource, toSection: .movies)
             self.collectionDataSource.apply(snapshot, animatingDifferences: true, completion: nil)
         }
     }
@@ -82,9 +78,8 @@ class SearchViewController: UIViewController, DetailsNavigationUseCase, MoviesLi
         
         DispatchQueue.main.async {
             
-            
             var snapshot = self.collectionDataSource.snapshot()
-            snapshot.reloadItems(self.viewModel.datasource)
+            snapshot.reloadItems(self.viewModel.filteredDatasource)
             self.collectionDataSource.apply(snapshot, animatingDifferences: true, completion: nil)
         }
     }
@@ -106,7 +101,8 @@ extension SearchViewController {
 extension SearchViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        navigateToDetails(with: viewModel.datasource[indexPath.row])
+        
+        navigateToDetails(with: viewModel.filteredDatasource[indexPath.row])
     }
 }
 
@@ -130,6 +126,7 @@ extension SearchViewController: MovieCellDelegate {
     }
     
     func updateHiddenState(for movie: Movie) {
+        
         viewModel.updateHideState(for: movie)
         setupInitialCollectionSnapshot()
     }

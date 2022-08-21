@@ -21,22 +21,17 @@ class SearchAPI: SearchProvider {
     
     func searchMovies(with searchTerm: String, completionHandler: @escaping SearchCompletionHandler) {
         
-        provider.searchMovies(with: searchTerm) { [weak self] result in
-            
-            guard let self = self else { return }
-            
+        provider.searchMovies(with: searchTerm) { result in
+
             switch result {
             case .success(let movies):
-                
-                let filteredHiddenMovies = self.filterMovies(for: movies)
-                completionHandler(.success(filteredHiddenMovies))
+                completionHandler(.success(movies))
                 
             case .failure(let error):
                 completionHandler(.failure(error))
             }
         }
     }
-    
     
     func filterMovies(for movies: [Movie]) -> [Movie] {
         

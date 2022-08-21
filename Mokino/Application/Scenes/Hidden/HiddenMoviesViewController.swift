@@ -17,6 +17,7 @@ class HiddenMoviesViewController: UIViewController, MoviesListUseCase, DetailsNa
             movieslistUIBuilder.cellsRegistration(on: collectionView)
             collectionView.setCollectionViewLayout(movieslistUIBuilder.createCompositionalLayout(), animated: false)
             collectionView.delegate = self
+            collectionView.keyboardDismissMode = .onDrag
         }
     }
     
@@ -25,16 +26,14 @@ class HiddenMoviesViewController: UIViewController, MoviesListUseCase, DetailsNa
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
         title = "Hidden Movies"
-        navigationController?.navigationBar.prefersLargeTitles = true
         
         view.backgroundColor = .customDarkerGrey
         setupCollectionProvider()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
         updateCollectionView()
     }
@@ -69,13 +68,10 @@ extension HiddenMoviesViewController: UICollectionViewDelegate {
 
 extension HiddenMoviesViewController: MovieCellDelegate {
     
-    func updateFavoriteState(for movie: Movie) {
-//        viewModel.updateFavoriteState(for: movie)
-        
-    }
+    func updateFavoriteState(for movie: Movie) {}
 
     func updateHiddenState(for movie: Movie) {
-        viewModel.updateHideState(for: movie)
+        viewModel.removeHidden(movie)
         updateCollectionView()
     }
 }

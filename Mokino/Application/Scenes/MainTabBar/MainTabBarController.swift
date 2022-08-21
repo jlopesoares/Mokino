@@ -9,12 +9,12 @@ import UIKit
 
 class MainTabBarController: UITabBarController {
     
-    var reachability: Reachability!
-    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         .lightContent
     }
     
+    var reachability: Reachability!
+
     override func viewDidLoad() {
         super.viewDidLoad()
       
@@ -45,7 +45,6 @@ extension MainTabBarController {
         }
     }
 }
-
 
 //MARK: - UI
 extension MainTabBarController {

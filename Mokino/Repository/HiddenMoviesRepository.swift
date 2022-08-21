@@ -14,7 +14,7 @@ struct HiddenMoviesRepository: RepositoryUseCase {
     }
     
     func updateState(for movie: Movie) {
-        
+        movie.updateHidden(!movie.hidden)
         updateState(for: movie, on: .hidden)
     }
 }

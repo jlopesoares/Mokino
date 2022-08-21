@@ -14,7 +14,7 @@ struct FavoritesRepository: RepositoryUseCase{
     }
     
     func updateState(for movie: Movie) {
-
+        movie.updateFavorite(!movie.favorite)
         updateState(for: movie, on: .favorites)
     }
 }

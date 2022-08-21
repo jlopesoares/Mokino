@@ -16,6 +16,18 @@ protocol MovieCellDelegate: AnyObject {
 class MovieCollectionViewCell: UICollectionViewCell {
     
     //MARK: - Outlets
+    @IBOutlet weak var hideMovieButton: UIButton!
+    @IBOutlet weak var ratingLabel: UILabel!
+    @IBOutlet weak var titleHeaderLabel: UILabel!
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var sinopseLabel: UILabel!
+   
+    @IBOutlet weak var ratingHeaderLabel: UILabel! {
+        didSet {
+            ratingHeaderLabel.text = "Average Rating:"
+        }
+    }
+    
     @IBOutlet weak var posterImageView: UIImageView! {
         didSet {
             posterImageView.setDefaultCornerRadius()
@@ -30,24 +42,6 @@ class MovieCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    @IBOutlet weak var titleHeaderLabel: UILabel!
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var releaseDateHeaderLabel: UILabel! {
-        didSet {
-            releaseDateHeaderLabel.text = "ReleaseDate:"
-        }
-    }
-    @IBOutlet weak var releaseDateLabel: UILabel!
-    @IBOutlet weak var ratingHeaderLabel: UILabel! {
-        didSet {
-            ratingHeaderLabel.text = "Average Rating:"
-        }
-    }
-    
-    @IBOutlet weak var hideMovieButton: UIButton!
-    
-    @IBOutlet weak var ratingLabel: UILabel!
-    
     weak var delegate: MovieCellDelegate?
     var movie: Movie?
     
@@ -56,15 +50,7 @@ class MovieCollectionViewCell: UICollectionViewCell {
         
         titleHeaderLabel.text = "Title:"
         titleLabel.text = movie.title
-        
-        if let releaseDate = movie.releaseDate {
-            releaseDateHeaderLabel.isHidden = false
-            releaseDateLabel.isHidden = false
-            releaseDateLabel.text = releaseDate
-        } else {
-            releaseDateHeaderLabel.isHidden = true
-            releaseDateLabel.isHidden = true
-        }
+        sinopseLabel.text = movie.overview
         
         if let rating = movie.voteAverage,
            !rating.isZero {
@@ -78,6 +64,7 @@ class MovieCollectionViewCell: UICollectionViewCell {
         
         posterImageView.setImage(url: movie.posterURL)
         favoritesButton.isSelected = movie.favorite
+        favoritesButton.isHidden = movie.hidden
         hideMovieButton.isHidden = movie.favorite
     }
     
@@ -91,6 +78,7 @@ class MovieCollectionViewCell: UICollectionViewCell {
     }
     
     @IBAction func hideButtonPressed(_ sender: Any) {
+       
         guard let movie = movie else {
             return
         }

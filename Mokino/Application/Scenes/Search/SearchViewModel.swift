@@ -24,24 +24,21 @@ final class SearchViewModel {
 //MARK: - Service
 extension SearchViewModel {
 
-    func getMovies(for searchTerm: String, completionHandler: @escaping SearchCompletionHandler) {
-        
-        searchAPI.searchMovies(with: searchTerm) { result in
-            
-            switch result {
-            case .success(let movie):
-                self.datasource = movie
-                
-            case .failure(let error):
-                break
-            }
-            
-            completionHandler(result)
-        }
+    var filteredDatasource: [Movie] {
+        return searchAPI.filterMovies(for: datasource)
     }
     
-    func refreshDatasource() {
-        datasource = searchAPI.filterMovies(for: datasource)
+    func getMovies(for searchTerm: String, completionHandler: @escaping SearchCompletionHandler) {
+        
+        searchAPI.searchMovies(with: searchTerm) { [weak self] result in
+            switch result {
+            case .success(let movies):
+                self?.datasource = movies
+                completionHandler(.success(movies))
+            case .failure(let error):
+                completionHandler(.failure(error))
+            }
+        }
     }
 }
 
@@ -50,7 +47,6 @@ extension SearchViewModel {
     
     func updateFavoriteState(for movie: Movie) {
         searchAPI.favoritesRepository.updateState(for: movie)
-        refreshDatasource()
     }
 }
 
@@ -59,6 +55,5 @@ extension SearchViewModel {
     
     func updateHideState(for movie: Movie) {
         searchAPI.hiddenMoviesRepository.updateState(for: movie)
-        refreshDatasource()
     }
 }

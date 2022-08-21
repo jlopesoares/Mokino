@@ -11,8 +11,11 @@ extension UIViewController {
     
     func presentConnectionLostViewController() {
      
-        let connectionLostViewController = UIStoryboard.main.connectionLostViewController
-        connectionLostViewController?.modalPresentationStyle = .fullScreen
-        present(connectionLostViewController!, animated: true)
+        guard let connectionLostVC = UIStoryboard.main.connectionLostViewController else {
+            return
+        }
+
+        connectionLostVC.modalPresentationStyle = .fullScreen
+        present(connectionLostVC, animated: true)
     }
 }
