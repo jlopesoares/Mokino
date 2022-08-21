@@ -46,6 +46,8 @@
 		716B767228B00AB90060BCB9 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 716B767128B00AB90060BCB9 /* MainTabBarController.swift */; };
 		717F39E128B24B21004D019A /* HiddenMoviesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717F39E028B24B21004D019A /* HiddenMoviesViewController.swift */; };
 		717F39E328B24B34004D019A /* HiddenMoviesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717F39E228B24B34004D019A /* HiddenMoviesViewModel.swift */; };
+		7186AC3F28B2EF7F00398C79 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7186AC3E28B2EF7F00398C79 /* Localizable.strings */; };
+		7186AC4128B2F02800398C79 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7186AC4028B2F02800398C79 /* String+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -108,6 +110,8 @@
 		716B767128B00AB90060BCB9 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		717F39E028B24B21004D019A /* HiddenMoviesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiddenMoviesViewController.swift; sourceTree = "<group>"; };
 		717F39E228B24B34004D019A /* HiddenMoviesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiddenMoviesViewModel.swift; sourceTree = "<group>"; };
+		7186AC3E28B2EF7F00398C79 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		7186AC4028B2F02800398C79 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -300,6 +304,7 @@
 				716B762028AFF6460060BCB9 /* AppDelegate.swift */,
 				716B762228AFF6460060BCB9 /* SceneDelegate.swift */,
 				716B762E28AFF6470060BCB9 /* Info.plist */,
+				7186AC3E28B2EF7F00398C79 /* Localizable.strings */,
 			);
 			path = SupportingFiles;
 			sourceTree = "<group>";
@@ -338,6 +343,7 @@
 				712A388228B10319004AA488 /* UIImageView+Extensions.swift */,
 				712A388428B1062D004AA488 /* UIView+Extensions.swift */,
 				71691A5128B1A68C00092F3C /* UIViewController+Extensions.swift */,
+				7186AC4028B2F02800398C79 /* String+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -470,6 +476,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7186AC3F28B2EF7F00398C79 /* Localizable.strings in Resources */,
 				716B762D28AFF6470060BCB9 /* LaunchScreen.storyboard in Resources */,
 				716B762A28AFF6470060BCB9 /* Assets.xcassets in Resources */,
 				716B762828AFF6460060BCB9 /* Main.storyboard in Resources */,
@@ -502,6 +509,7 @@
 				716B762128AFF6460060BCB9 /* AppDelegate.swift in Sources */,
 				716B766728B005610060BCB9 /* FavoritesViewModel.swift in Sources */,
 				716B765B28AFFE260060BCB9 /* FavoritesViewController.swift in Sources */,
+				7186AC4128B2F02800398C79 /* String+Extensions.swift in Sources */,
 				712A386228B015BC004AA488 /* SearchViewController.swift in Sources */,
 				712A387428B0D314004AA488 /* SearchService.swift in Sources */,
 				717F39E128B24B21004D019A /* HiddenMoviesViewController.swift in Sources */,

@@ -14,7 +14,7 @@ class SearchViewController: UIViewController, DetailsNavigationUseCase, MoviesLi
     @IBOutlet weak var searchTextfield: UITextField! {
         didSet {
             searchTextfield.delegate = self
-            searchTextfield.placeholder = "Search Name"
+            searchTextfield.placeholder = "Search.Placeholder".localized
             searchTextfield.returnKeyType = .search
         }
     }

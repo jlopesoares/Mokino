@@ -24,7 +24,7 @@ class MovieCollectionViewCell: UICollectionViewCell {
    
     @IBOutlet weak var ratingHeaderLabel: UILabel! {
         didSet {
-            ratingHeaderLabel.text = "Average Rating:"
+            ratingHeaderLabel.text = "Movie.AverageRating".localized
         }
     }
     
@@ -48,7 +48,7 @@ class MovieCollectionViewCell: UICollectionViewCell {
     func setup(movie: Movie) {
         self.movie = movie
         
-        titleHeaderLabel.text = "Title:"
+        titleHeaderLabel.text = "Movie.Title.Hint".localized
         titleLabel.text = movie.title
         sinopseLabel.text = movie.overview
         

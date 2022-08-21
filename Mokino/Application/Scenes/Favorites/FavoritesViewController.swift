@@ -30,7 +30,7 @@ class FavoritesViewController: UIViewController, MoviesListUseCase, DetailsNavig
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "Favorites"
+        title = "Screen.Favorites.Title".localized
         
         setHiddenMoviesButton()
         setupCollectionProvider()

@@ -26,7 +26,7 @@ class HiddenMoviesViewController: UIViewController, MoviesListUseCase, DetailsNa
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "Hidden Movies"
+        title = "Screen.HiddenMovies.Title".localized
         
         view.backgroundColor = .customDarkerGrey
         setupCollectionProvider()

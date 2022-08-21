@@ -23,7 +23,7 @@ class DetailsViewController: UIViewController {
     @IBOutlet weak var releaseDateLabel: UILabel!
     @IBOutlet weak var releaseDateHeaderLabel: UILabel! {
         didSet {
-            releaseDateHeaderLabel.text = "Release Date:"
+            releaseDateHeaderLabel.text = "Movie.ReleaseDate".localized
         }
     }
     
@@ -31,7 +31,7 @@ class DetailsViewController: UIViewController {
     @IBOutlet weak var ratingLabel: UILabel!
     @IBOutlet weak var ratingHeaderLabel: UILabel! {
         didSet {
-            ratingHeaderLabel.text = "Rating:"
+            ratingHeaderLabel.text = "Movie.AverageRating".localized
         }
     }
     
