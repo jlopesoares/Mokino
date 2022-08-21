@@ -24,7 +24,7 @@ final class DetailsViewModel {
     }
     
     var releaseDate: String {
-        movie.releaseDate ?? "unknown"
+        movie.releaseDate ?? "Generic.Unknown".localized
     }
     
     var rating: String? {

@@ -65,7 +65,7 @@ extension MainTabBarController {
             
             let favoritesNavigationController = UINavigationController(rootViewController: favoritesVC)
             configureNavigationController(favoritesNavigationController,
-                                          title: "Favorites",
+                                          title: "Screen.Favorites.Title".localized,
                                           image: UIImage(systemName: "bookmark") ?? .add)
             
             self.viewControllers = [favoritesNavigationController]
@@ -75,7 +75,7 @@ extension MainTabBarController {
             
             let searchNavigationController = UINavigationController(rootViewController: searchVC)
             configureNavigationController(searchNavigationController,
-                                          title: "Search",
+                                          title: "Screen.Search.Title".localized,
                                           image: UIImage(systemName: "magnifyingglass") ?? .actions)
             
             self.viewControllers?.append(searchNavigationController)

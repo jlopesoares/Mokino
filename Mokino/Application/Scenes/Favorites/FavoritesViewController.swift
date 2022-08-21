@@ -18,10 +18,7 @@ class FavoritesViewController: UIViewController, MoviesListUseCase, DetailsNavig
     var collectionDataSource: UICollectionViewDiffableDataSource<SearchSections, Movie>!
     @IBOutlet weak var collectionView: UICollectionView! {
         didSet {
-            movieslistUIBuilder.cellsRegistration(on: collectionView)
-            collectionView.setCollectionViewLayout(movieslistUIBuilder.createCompositionalLayout(), animated: false)
-            collectionView.delegate = self
-            collectionView.keyboardDismissMode = .onDrag
+            setupCollectionViewConfigs(delegate: self)
         }
     }
     
@@ -30,44 +27,39 @@ class FavoritesViewController: UIViewController, MoviesListUseCase, DetailsNavig
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "Favorites"
+        title = "Screen.Favorites.Title".localized
         
         setHiddenMoviesButton()
-        setupCollectionProvider()
+        setupMoviesCellsProvider(delegate: self)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        updateCollectionView()
+        setupCollectionSnapshot(with: viewModel.getFavoriteMovies())
     }
     
+    /// Function to add a Open Hidden Movies action on current Navigation Item
     func setHiddenMoviesButton() {
         
         let hiddenMoviesButton = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(openHiddenMovies))
         hiddenMoviesButton.tintColor = .customBeige
         navigationItem.rightBarButtonItem = hiddenMoviesButton
     }
-    
-    func updateCollectionView() {
-        
-        var snapshot = NSDiffableDataSourceSnapshot<SearchSections, Movie>()
-        snapshot.appendSections([.movies])
-        snapshot.appendItems(viewModel.getFavoriteMovies(), toSection: .movies)
-        collectionDataSource.apply(snapshot, animatingDifferences: true, completion: nil)
+}
+
+//MARK: - Movie Cell Delegate
+extension FavoritesViewController: MovieCellDelegate {
+   
+    func updateFavoriteState(for movie: Movie) {
+        viewModel.removeFavorite(movie)
+        setupCollectionSnapshot(with: viewModel.getFavoriteMovies())
     }
     
-    func setupCollectionProvider() {
-        
-        collectionDataSource = UICollectionViewDiffableDataSource(collectionView: collectionView, cellProvider: { collectionView, indexPath, movie in
-            
-            let movieCell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: MovieCollectionViewCell.self), for: indexPath) as! MovieCollectionViewCell
-            
-            movieCell.setup(movie: movie)
-            movieCell.delegate = self
-            
-            return movieCell
-        })
-    }
+    func updateHiddenState(for movie: Movie) {}
+}
+
+//MARK: - Navigation
+extension FavoritesViewController {
     
     @objc func openHiddenMovies() {
         
@@ -76,16 +68,7 @@ class FavoritesViewController: UIViewController, MoviesListUseCase, DetailsNavig
     }
 }
 
-extension FavoritesViewController: MovieCellDelegate {
-   
-    func updateFavoriteState(for movie: Movie) {
-        viewModel.removeFavorite(movie)
-        updateCollectionView()
-    }
-    
-    func updateHiddenState(for movie: Movie) {}
-}
-
+//MARK: - CollectionViewDelegate
 extension FavoritesViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

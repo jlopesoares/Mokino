@@ -30,10 +30,14 @@ extension UIStoryboard {
     }
     
     var connectionLostViewController: UIViewController? {
-        UIStoryboard.main.instantiateViewController(withIdentifier: "ConnectionLostViewController")
+        UIStoryboard.main.instantiateViewController(withIdentifier: StoryboardConstants.connectionLost.rawValue)
     }
     
     var hiddenMoviesViewController: HiddenMoviesViewController? {
         UIStoryboard.main.instantiateViewController(withIdentifier: String(describing: HiddenMoviesViewController.self)) as? HiddenMoviesViewController
     }
+}
+
+private enum StoryboardConstants: String {
+    case connectionLost = "ConnectionLostViewController"
 }
