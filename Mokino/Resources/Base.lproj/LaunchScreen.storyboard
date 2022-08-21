@@ -15,25 +15,28 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="camera_movie_icon" translatesAutoresizingMaskIntoConstraints="NO" id="679-KV-Pmb">
-                                <rect key="frame" x="124.5" y="365.5" width="165" height="165"/>
-                                <color key="tintColor" red="0.97647058959999999" green="0.87450981139999995" blue="0.68235301969999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="camera_movie_icon" translatesAutoresizingMaskIntoConstraints="NO" id="etr-QW-Y8G">
+                                <rect key="frame" x="132" y="373" width="150" height="150"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="150" id="XuR-GM-JiS"/>
+                                    <constraint firstAttribute="height" constant="150" id="cgv-er-Via"/>
+                                </constraints>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" red="0.09627961367" green="0.34587088230000002" blue="0.37816989420000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="679-KV-Pmb" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="UTZ-KF-G5B"/>
-                            <constraint firstItem="679-KV-Pmb" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="UWZ-uH-rC2"/>
+                            <constraint firstItem="etr-QW-Y8G" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="gvH-Hq-0z0"/>
+                            <constraint firstItem="etr-QW-Y8G" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="mNi-Ry-eOT"/>
                         </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="53" y="375"/>
+            <point key="canvasLocation" x="52.173913043478265" y="375"/>
         </scene>
     </scenes>
     <resources>
-        <image name="camera_movie_icon" width="165" height="165"/>
+        <image name="camera_movie_icon" width="731" height="731"/>
     </resources>
 </document>

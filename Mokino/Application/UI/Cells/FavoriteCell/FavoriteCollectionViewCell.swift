@@ -9,10 +9,16 @@ import UIKit
 
 class FavoriteCollectionViewCell: UICollectionViewCell {
 
-    @IBOutlet weak var posterImageView: UIImageView!
+    @IBOutlet weak var posterImageView: UIImageView!{
+        didSet {
+            posterImageView.setDefaultCornerRadius()
+        }
+    }
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var sinopseLabel: UILabel!
     @IBOutlet weak var ratingLabel: UILabel!
+    
+    weak var delegate: MovieCellDelegate?
     
     func setup(_ movie: Movie) {
         posterImageView.setImage(url: movie.posterURL)

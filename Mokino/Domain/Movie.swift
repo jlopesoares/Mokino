@@ -7,33 +7,16 @@
 
 import Foundation
 
-struct Movie: Codable, Hashable {
+class Movie: Codable, Hashable {
     
     let id: Int
     let title: String?
     let backdropPath: String?
     let posterPath: String?
     let overview: String?
-    let releaseDate: Date?
+    let releaseDate: String?
     let voteAverage: Double?
-    
-    var isFavorite: Bool = false
-    
-    public var posterURL: URL? {
-        return URL(string: "https://image.tmdb.org/t/p/w500\(posterPath ?? "")")
-    }
-    
-    public var backdropURL: URL? {
-        return URL(string: "https://image.tmdb.org/t/p/w1280\(backdropPath ?? "")")
-    }
-    
-    public static func == (lhs: Movie, rhs: Movie) -> Bool {
-        return lhs.id == rhs.id
-    }
-    
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
-    }
+    var favorite: Bool = false
     
     enum CodingKeys: String, CodingKey {
         case id = "id"
@@ -45,7 +28,7 @@ struct Movie: Codable, Hashable {
         case voteAverage = "vote_average"
     }
     
-    init(from decoder: Decoder) throws {
+    required init(from decoder: Decoder) throws {
         
         let values = try decoder.container(keyedBy: CodingKeys.self)
         
@@ -54,7 +37,27 @@ struct Movie: Codable, Hashable {
         backdropPath = try? values.decode(String.self, forKey: .backdropPath)
         posterPath = try? values.decode(String.self, forKey: .posterPath)
         overview = try? values.decode(String.self, forKey: .overview)
-        releaseDate = try? values.decode(Date.self, forKey: .releaseDate)
+        releaseDate = try? values.decode(String.self, forKey: .releaseDate)
         voteAverage = try? values.decode(Double.self, forKey: .voteAverage)
+    }
+    
+    public var posterURL: URL? {
+        return URL(string: "https://image.tmdb.org/t/p/w500\(posterPath ?? "")")
+    }
+    
+    public var backdropURL: URL? {
+        return URL(string: "https://image.tmdb.org/t/p/w1280\(backdropPath ?? "")")
+    }
+    
+    func updateFavorite(_ favorite: Bool) {
+        self.favorite = favorite
+    }
+    
+    public static func == (lhs: Movie, rhs: Movie) -> Bool {
+        return lhs.id == rhs.id && lhs.favorite == rhs.favorite
+    }
+    
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
     }
 }

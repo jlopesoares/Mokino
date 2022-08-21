@@ -9,19 +9,6 @@ import Foundation
 
 class SearchService: SearchProvider, NetworkUseCase {
     
-//    private let jsonDecoder: JSONDecoder = {
-//
-//        let dateFormatter = DateFormatter()
-//        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
-//        dateFormatter.dateFormat = "yyyy-mm-dd"
-//
-//        let jsonDecoder = JSONDecoder()
-//        jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
-//        jsonDecoder.dateDecodingStrategy = .formatted(dateFormatter)
-//
-//        return jsonDecoder
-//    }()
-    
     func searchMovies(with searchTerm: String, completionHandler: @escaping SearchCompletionHandler) {
         
         let queryItems = [
@@ -33,7 +20,7 @@ class SearchService: SearchProvider, NetworkUseCase {
             return
         }
         
-        URLSession.shared.dataTask(with: url) { [unowned self] (data, response, error) in
+        URLSession.shared.dataTask(with: url) { (data, response, error) in
             
             if let error = error {
                 completionHandler(.failure(error))

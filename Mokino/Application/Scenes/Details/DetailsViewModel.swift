@@ -24,7 +24,7 @@ final class DetailsViewModel {
     }
     
     var releaseDate: String {
-        movie.releaseDate?.formatted(date: .abbreviated, time: .omitted) ?? "unknown"
+        movie.releaseDate ?? "unknown"
     }
     
     var rating: String? {
@@ -43,5 +43,4 @@ final class DetailsViewModel {
     var headerImageURL: URL? {
         movie.backdropURL
     }
-    
 }

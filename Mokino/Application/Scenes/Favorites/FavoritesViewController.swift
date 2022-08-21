@@ -29,14 +29,9 @@ class FavoritesViewController: UIViewController, MoviesListUseCase, DetailsNavig
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        title = "Favorites"
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(test))
-        
-        
-        title = "Mokino Favorites"
-        navigationController?.navigationBar.prefersLargeTitles = true
-        
-        view.backgroundColor = .customDarkerGrey
+        setHiddenMoviesButton()
         setupCollectionProvider()
     }
     
@@ -44,6 +39,13 @@ class FavoritesViewController: UIViewController, MoviesListUseCase, DetailsNavig
         super.viewDidAppear(animated)
         
         updateCollectionView()
+    }
+    
+    func setHiddenMoviesButton() {
+        
+        let hiddenMoviesButton = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(openHiddenMovies))
+        hiddenMoviesButton.tintColor = .customBeige
+        navigationItem.rightBarButtonItem = hiddenMoviesButton
     }
     
     func updateCollectionView() {
@@ -60,25 +62,28 @@ class FavoritesViewController: UIViewController, MoviesListUseCase, DetailsNavig
             
             let movieCell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: FavoriteCollectionViewCell.self), for: indexPath) as! FavoriteCollectionViewCell
             
-            
             movieCell.setup(movie)
             
             return movieCell
         })
     }
     
-    @objc func test() {
+    @objc func openHiddenMovies() {
+        
+        let hiddenMoviesViewController = UIStoryboard.main.hiddenMoviesViewController
+        navigationController?.pushViewController(hiddenMoviesViewController!, animated: true)
         
     }
-    
 }
 
 extension FavoritesViewController: MovieCellDelegate {
-    
-    func movieCell(_ movieCell: MovieCollectionViewCell, updateFavoriteState movie: Movie) {
+   
+    func updateFavoriteState(for movie: Movie) {
         
-        viewModel.repository.updateState(for: movie)
-        updateCollectionView()
+    }
+    
+    func updateHiddenState(for movie: Movie) {
+        
     }
 }
 

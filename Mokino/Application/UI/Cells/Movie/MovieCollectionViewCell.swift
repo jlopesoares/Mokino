@@ -9,7 +9,8 @@ import UIKit
 
 protocol MovieCellDelegate: AnyObject {
     
-    func movieCell(_ movieCell: MovieCollectionViewCell, updateFavoriteState movie: Movie)
+    func updateFavoriteState(for movie: Movie)
+    func updateHiddenState(for movie: Movie)
 }
 
 class MovieCollectionViewCell: UICollectionViewCell {
@@ -23,8 +24,8 @@ class MovieCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var favoritesButton: UIButton! {
         didSet {
-            favoritesButton.setImage(UIImage(named: "favorite"), for: .normal)
-            favoritesButton.setImage(UIImage(named: "favorite_active"), for: .selected)
+            favoritesButton.setImage(UIImage(systemName: "bookmark"), for: .normal)
+            favoritesButton.setImage(UIImage(systemName: "bookmark.fill"), for: .selected)
             favoritesButton.tintColor = .customGreen
         }
     }
@@ -43,6 +44,8 @@ class MovieCollectionViewCell: UICollectionViewCell {
         }
     }
     
+    @IBOutlet weak var hideMovieButton: UIButton!
+    
     @IBOutlet weak var ratingLabel: UILabel!
     
     weak var delegate: MovieCellDelegate?
@@ -54,7 +57,7 @@ class MovieCollectionViewCell: UICollectionViewCell {
         titleHeaderLabel.text = "Title:"
         titleLabel.text = movie.title
         
-        if let releaseDate = movie.releaseDate?.formatted(date: .abbreviated, time: .omitted) {
+        if let releaseDate = movie.releaseDate {
             releaseDateHeaderLabel.isHidden = false
             releaseDateLabel.isHidden = false
             releaseDateLabel.text = releaseDate
@@ -74,7 +77,8 @@ class MovieCollectionViewCell: UICollectionViewCell {
         }
         
         posterImageView.setImage(url: movie.posterURL)
-        favoritesButton.isSelected = movie.isFavorite
+        favoritesButton.isSelected = movie.favorite
+        hideMovieButton.isHidden = movie.favorite
     }
     
     @IBAction func favoritesButtonPressed(_ sender: Any) {
@@ -83,6 +87,14 @@ class MovieCollectionViewCell: UICollectionViewCell {
             return
         }
 
-        delegate?.movieCell(self, updateFavoriteState: movie)
+        delegate?.updateFavoriteState(for: movie)
+    }
+    
+    @IBAction func hideButtonPressed(_ sender: Any) {
+        guard let movie = movie else {
+            return
+        }
+
+        delegate?.updateHiddenState(for: movie)
     }
 }

@@ -13,13 +13,11 @@ enum SearchSections {
 
 final class SearchViewModel {
     
-    let searchAPI: SearchAPI
-    let favoritesRepository: FavoritesRepository
+    private let searchAPI: SearchAPI
     private(set) var datasource = [Movie]()
     
-    init(searchAPI: SearchAPI, favoritesRepository: FavoritesRepository) {
+    init(searchAPI: SearchAPI) {
         self.searchAPI = searchAPI
-        self.favoritesRepository = favoritesRepository
     }
 }
 
@@ -40,5 +38,27 @@ extension SearchViewModel {
             
             completionHandler(result)
         }
+    }
+    
+    func refreshDatasource() {
+        datasource = searchAPI.filterMovies(for: datasource)
+    }
+}
+
+//MARK: - Favorites
+extension SearchViewModel {
+    
+    func updateFavoriteState(for movie: Movie) {
+        searchAPI.favoritesRepository.updateState(for: movie)
+        refreshDatasource()
+    }
+}
+
+//MARK: - Hide
+extension SearchViewModel {
+    
+    func updateHideState(for movie: Movie) {
+        searchAPI.hiddenMoviesRepository.updateState(for: movie)
+        refreshDatasource()
     }
 }

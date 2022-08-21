@@ -10,6 +10,7 @@ import Combine
 
 class SearchViewController: UIViewController, DetailsNavigationUseCase, MoviesListUseCase {
     
+    //MARK: - Outlets
     @IBOutlet weak var searchTextfield: UITextField! {
         didSet {
             searchTextfield.delegate = self
@@ -25,66 +26,34 @@ class SearchViewController: UIViewController, DetailsNavigationUseCase, MoviesLi
         }
     }
     
-    let viewModel: SearchViewModel = SearchViewModel(searchAPI: SearchAPI(provider: SearchService()), favoritesRepository: FavoritesRepository())
+    //MARK: - Movies List Dependencies
     var collectionDataSource: UICollectionViewDiffableDataSource<SearchSections, Movie>!
     var movieslistUIBuilder = MoviesListUIBuilder()
     
+    let viewModel: SearchViewModel = SearchViewModel(searchAPI: SearchAPI(provider: SearchService(),
+                                                                          favoritesRepository: FavoritesRepository(),
+                                                                          hiddenMoviesRepository: HiddenMoviesRepository()))
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         title = "Search"
-        view.backgroundColor = .customDarkerGrey
         
         setupCollectionProvider()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
         searchTextfield.becomeFirstResponder()
     }
     
-    func updateCollectionView() {
-        
-        var snapshot = NSDiffableDataSourceSnapshot<SearchSections, Movie>()
-        snapshot.appendSections([.movies])
-        snapshot.appendItems(viewModel.datasource, toSection: .movies)
-        collectionDataSource.apply(snapshot, animatingDifferences: true, completion: nil)
-    }
-}
-
-//MARK: - Service
-extension SearchViewController {
     
-    func searchMoviesForCurrentTerm() {
-        
-        guard let searchTerm = searchTextfield.text else { return }
-        
-        viewModel.getMovies(for: searchTerm) { result in
-            self.updateCollectionView()
-        }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.refreshDatasource()
     }
-}
-
-extension SearchViewController: UICollectionViewDelegate {
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        navigateToDetails(with: viewModel.datasource[indexPath.row])
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        setupInitialCollectionSnapshot()
     }
-}
-
-//MARK: - Text
-extension SearchViewController: UITextFieldDelegate {
-
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-       
-        textField.resignFirstResponder()
-        searchMoviesForCurrentTerm()
-        return true
-    }
-}
-
-//MARK: - CollectionView
-extension SearchViewController {
     
     func setupCollectionProvider() {
         
@@ -97,12 +66,71 @@ extension SearchViewController {
             return movieCell
         })
     }
+    
+    func setupInitialCollectionSnapshot() {
+        
+        DispatchQueue.main.async {
+            
+            var snapshot = NSDiffableDataSourceSnapshot<SearchSections, Movie>()
+            snapshot.appendSections([.movies])
+            snapshot.appendItems(self.viewModel.datasource, toSection: .movies)
+            self.collectionDataSource.apply(snapshot, animatingDifferences: true, completion: nil)
+        }
+    }
+    
+    func updateCollectionView() {
+        
+        DispatchQueue.main.async {
+            
+            
+            var snapshot = self.collectionDataSource.snapshot()
+            snapshot.reloadItems(self.viewModel.datasource)
+            self.collectionDataSource.apply(snapshot, animatingDifferences: true, completion: nil)
+        }
+    }
+}
+
+//MARK: - Service
+extension SearchViewController {
+    
+    func searchMoviesForCurrentTerm() {
+        
+        guard let searchTerm = searchTextfield.text else { return }
+        
+        viewModel.getMovies(for: searchTerm) { [weak self] result in
+            self?.setupInitialCollectionSnapshot()
+        }
+    }
+}
+
+extension SearchViewController: UICollectionViewDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        navigateToDetails(with: viewModel.datasource[indexPath.row])
+    }
+}
+
+//MARK: - TextField
+extension SearchViewController: UITextFieldDelegate {
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+       
+        textField.resignFirstResponder()
+        searchMoviesForCurrentTerm()
+        return true
+    }
 }
 
 extension SearchViewController: MovieCellDelegate {
     
-    func movieCell(_ movieCell: MovieCollectionViewCell, updateFavoriteState movie: Movie) {
-
-        viewModel.favoritesRepository.updateState(for: movie)
+    func updateFavoriteState(for movie: Movie) {
+        
+        viewModel.updateFavoriteState(for: movie)
+        updateCollectionView()
+    }
+    
+    func updateHiddenState(for movie: Movie) {
+        viewModel.updateHideState(for: movie)
+        setupInitialCollectionSnapshot()
     }
 }
