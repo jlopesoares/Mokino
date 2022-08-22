@@ -10,29 +10,29 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="MovieCollectionViewCell" customModule="Mokino" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="415" height="173"/>
+            <rect key="frame" x="0.0" y="0.0" width="464" height="173"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="415" height="173"/>
+                <rect key="frame" x="0.0" y="0.0" width="464" height="173"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="mbV-OD-OwM">
-                        <rect key="frame" x="0.0" y="0.0" width="415" height="173"/>
+                        <rect key="frame" x="0.0" y="0.0" width="464" height="173"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dummy_poster" translatesAutoresizingMaskIntoConstraints="NO" id="toY-JA-JLN">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="toY-JA-JLN">
                                 <rect key="frame" x="0.0" y="0.0" width="133" height="173"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="toY-JA-JLN" secondAttribute="height" multiplier="1:1.3" id="GNS-6u-WSe"/>
                                 </constraints>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="kMC-kL-d5J">
-                                <rect key="frame" x="149" y="0.0" width="210" height="173"/>
+                                <rect key="frame" x="149" y="0.0" width="259" height="173"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="p7a-Du-Pef" userLabel="MetadataStackView">
-                                        <rect key="frame" x="0.0" y="0.0" width="210" height="173"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="p7a-Du-Pef" userLabel="MetadataStackView">
+                                        <rect key="frame" x="0.0" y="0.0" width="259" height="173"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9z9-mD-cNV">
-                                                <rect key="frame" x="0.0" y="0.0" width="210" height="24"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="259" height="24"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="24" id="3WA-he-HQQ"/>
                                                 </constraints>
@@ -41,7 +41,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fFS-k0-wGi">
-                                                <rect key="frame" x="0.0" y="28" width="210" height="24"/>
+                                                <rect key="frame" x="0.0" y="28" width="259" height="24"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="24" id="LEX-ws-DR9"/>
                                                 </constraints>
@@ -50,13 +50,13 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Up-F1-Rke">
-                                                <rect key="frame" x="0.0" y="56" width="210" height="61"/>
+                                                <rect key="frame" x="0.0" y="56" width="259" height="61"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ps6-qh-tTK">
-                                                <rect key="frame" x="0.0" y="121" width="210" height="24"/>
+                                                <rect key="frame" x="0.0" y="121" width="259" height="24"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="24" id="x3y-pE-JfZ"/>
                                                 </constraints>
@@ -65,7 +65,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sKl-ng-1ee">
-                                                <rect key="frame" x="0.0" y="149" width="210" height="24"/>
+                                                <rect key="frame" x="0.0" y="149" width="259" height="24"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="24" id="YYr-Io-7GE"/>
                                                 </constraints>
@@ -78,7 +78,7 @@
                                 </subviews>
                             </stackView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DmJ-Cs-gmD" userLabel="ActionsView">
-                                <rect key="frame" x="375" y="0.0" width="40" height="173"/>
+                                <rect key="frame" x="424" y="0.0" width="40" height="173"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sTN-2k-qHA">
                                         <rect key="frame" x="8" y="8" width="24" height="24"/>
@@ -132,7 +132,7 @@
                 <constraint firstAttribute="bottom" secondItem="mbV-OD-OwM" secondAttribute="bottom" id="ckk-GQ-u4L"/>
                 <constraint firstItem="mbV-OD-OwM" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="z0A-AM-f1P"/>
             </constraints>
-            <size key="customSize" width="415" height="173"/>
+            <size key="customSize" width="567" height="173"/>
             <connections>
                 <outlet property="favoritesButton" destination="sTN-2k-qHA" id="Ywc-v3-Y9L"/>
                 <outlet property="hideMovieButton" destination="it4-I5-IC1" id="W6h-yp-4dF"/>
@@ -143,13 +143,13 @@
                 <outlet property="titleHeaderLabel" destination="9z9-mD-cNV" id="rJO-e3-BDf"/>
                 <outlet property="titleLabel" destination="fFS-k0-wGi" id="Rq9-Bb-Cwq"/>
             </connections>
-            <point key="canvasLocation" x="203.62318840579712" y="127.56696428571428"/>
+            <point key="canvasLocation" x="313.04347826086956" y="127.56696428571428"/>
         </collectionViewCell>
     </objects>
     <resources>
         <image name="bookmark" catalog="system" width="112" height="128"/>
-        <image name="dummy_poster" width="600" height="900"/>
         <image name="favorite" width="18" height="24"/>
+        <image name="placeholder" width="1920" height="1080"/>
         <image name="trash" catalog="system" width="121" height="128"/>
     </resources>
 </document>

@@ -24,15 +24,26 @@ final class DetailsViewModel {
     }
     
     var releaseDate: String {
-        movie.releaseDate ?? "Generic.Unknown".localized
+        
+        guard
+            let releaseDate = movie.releaseDate,
+            !releaseDate.isEmpty
+        else {
+            return "Generic.Unknown".localized
+        }
+        
+        return releaseDate
     }
     
     var rating: String? {
         
-        guard let rating = movie.voteAverage else {
-            return nil
+        guard
+            let rating = movie.voteAverage,
+            !rating.isZero
+        else {
+            return "Generic.Unknown".localized
         }
-
+        
         return "\(rating)"
     }
     
